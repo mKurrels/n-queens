@@ -183,43 +183,40 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(startingIndex) {
-      // var self = this;
-      // var rows = self.rows();
-      // var diagonal = [];
-      // var diagonalIndex = startingIndex[0] + startingIndex[1];
-      // for (var i = 0; i < rows.length; i++){
-      //   for (var j = 0; j < rows.length; j++){
-      //     if ((i+j) === diagonalIndex){
-      //       diagonal.push(rows[i][j]);
-      //     }
-      //   }
-      // }
+      var self = this;
+      var rows = self.rows();
+      var diagonal = [];
+      var diagonalIndex = startingIndex[0] + startingIndex[1];
+      for (var i = 0; i < rows.length; i++){
+        for (var j = 0; j < rows.length; j++){
+          if ((i+j) === diagonalIndex){
+            diagonal.push(rows[i][j]);
+          }
+        }
+      }
 
-      // return self.hasRowConflictAt(diagonal); 
-      return false;
+      return self.hasRowConflictAt(diagonal); 
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      // var self = this;
-      // var rows = self.rows();
-      // var conflict = false;
-      // //check each member of the first row
-      // for (var i = 1; i < rows.length; i++){
-      //     if (self.hasMajorDiagonalConflictAt([0,i])){
-      //       conflict = true;
-      //     }
-      // }
-      // //check each member of the first column
-      // for (var j = 0; j < rows.length; j++){
-      //   if (self.hasMajorDiagonalConflictAt([j,rows.length-1])){
-      //     conflict = true;
-      //   }
-      // }
+      var self = this;
+      var rows = self.rows();
+      var conflict = false;
+      //check each member of the first row
+      for (var i = 1; i < rows.length; i++){
+          if (self.hasMinorDiagonalConflictAt([0,i])){
+            conflict = true;
+          }
+      }
+      //check each member of the first column
+      for (var j = 0; j < rows.length; j++){
+        if (self.hasMinorDiagonalConflictAt([j,rows.length-1])){
+          conflict = true;
+        }
+      }
      
-      // return conflict; // fixme
-
-      return false;
+      return conflict; // fixme
       
     }
 
