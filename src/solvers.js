@@ -14,10 +14,53 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  //keep a list of solutions
+  var solutions = [];
+  //recursive function (board, rowIndex, numRooks)
+  var checkBoard = function(board,rowIndex,numRooks){   
+    //make matrix from board with board.rows();
+    var rows = board.rows();
+    //for each collumn in row at rowIndex of matrix:
+    for (var col = 0; col < n; col ++){
+      //add rook to this row/collumn of board.
+      board.togglePiece(rowIndex,col);
+      //incriment rooks
+      numRooks++;
+      //if col conflict of board:
+      if (board.hasAnyRooksConflicts()){
+        //toggle rook at this row/collumn
+        board.togglePiece(rowIndex,col);
+        console.log('conflict at: ' + rowIndex + ',' + col)
+        //decriment rooks
+        numRooks--;
+      // else
+      } else {
+        //if rowIndex === n - 1 and number of rooks === n:
+        if (rowIndex === n-1 && numRooks === n){
+          //add board to lists of solutions      
+          solutions.push(board.rows());
+        } 
+        //if not at last row 
+        if (rowIndex < n -1){
+          console.log('recursion')
+          //recurse with new board and rowIndex++ and numRooks++
+          checkBoard(board,rowIndex+1,numRooks);
+          //take out rook
+          //board.togglePiece(rowIndex,col);
+        }    
+        //toggle board[row][col]
+        //board.togglePiece(rowIndex,col)
+      }
+      console.log('col', col, 'solutions', solutions);
+    }
+  }
+  //make an empty board with dementions n
+  var emptyBoard = new Board({n:n});
+  //recurse on that empty board with row 0 and 0 rooks
+  checkBoard(emptyBoard,0,0);
 
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution;
+  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solutions));
+  return solutions;
 };
 
 
@@ -48,3 +91,56 @@ window.countNQueensSolutions = function(n) {
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
+
+
+
+// window.findNRooksSolution = function(n) {
+//   //keep a list of solutions
+//   var solutions = [];
+//   //recursive function (board, rowIndex, numRooks)
+//   var checkBoard = function(board,rowIndex,numRooks){   
+//     //make matrix from board with board.rows();
+//     var rows = board.rows();
+//     //console.log(board.rows());
+//     //for each collumn in row at rowIndex of matrix:
+//     for (var col = 0; col < n; col ++){
+
+//       //add rook to this row/collumn of board.
+//       board.togglePiece(rowIndex,col);
+//       //incriment rooks
+//       numRooks++;
+//       //if col conflict of board:
+//       if (board.hasAnyRooksConflicts()){
+//         //toggle rook at this row/collumn
+//         board.togglePiece(rowIndex,col);
+//         console.log('conflict at: ' + rowIndex + ',' + col)
+//         //decriment rooks
+//         numRooks--;
+//       // else
+//       } else {
+//         //if rowIndex === n - 1 and number of rooks === n:
+//         if (rowIndex === n-1 && numRooks === n){
+//           //add board to lists of solutions      
+//           solutions.push(board.rows());
+//         } 
+//         //if not at last row 
+//         if (rowIndex < n -1){
+//           console.log('recursion')
+//           //recurse with new board and rowIndex++ and numRooks++
+//           checkBoard(board,rowIndex+1,numRooks);
+//           //take out rook
+//           //board.togglePiece(rowIndex,col);
+//         }    
+//         //toggle board[row][col]
+//         //board.togglePiece(rowIndex,col)
+//       }
+//     }
+//   }
+//   //make an empty board with dementions n
+//   var emptyBoard = new Board({n:n});
+//   //recurse on that empty board with row 0 and 0 rooks
+//   checkBoard(emptyBoard,0,0);
+
+//   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solutions));
+//   return solutions;
+// };
