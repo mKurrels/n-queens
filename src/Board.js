@@ -1,16 +1,15 @@
 // This file is a Backbone Model (don't worry about what that means)
 // It's part of the Board Visualizer
 // The only portions you need to work on are the helper functions (below)
-
 (function() {
 
   window.Board = Backbone.Model.extend({
 
-    initialize: function (params) {
+    initialize: function(params) {
       if (_.isUndefined(params) || _.isNull(params)) {
         console.log('Good guess! But to use the Board() constructor, you must pass it an argument in one of the following formats:');
-        console.log('\t1. An object. To create an empty board of size n:\n\t\t{n: %c<num>%c} - Where %c<num> %cis the dimension of the (empty) board you wish to instantiate\n\t\t%cEXAMPLE: var board = new Board({n:5})', 'color: blue;', 'color: black;','color: blue;', 'color: black;', 'color: grey;');
-        console.log('\t2. An array of arrays (a matrix). To create a populated board of size n:\n\t\t[ [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...] ] - Where each %c<val>%c is whatever value you want at that location on the board\n\t\t%cEXAMPLE: var board = new Board([[1,0,0],[0,1,0],[0,0,1]])', 'color: blue;', 'color: black;','color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
+        console.log('\t1. An object. To create an empty board of size n:\n\t\t{n: %c<num>%c} - Where %c<num> %cis the dimension of the (empty) board you wish to instantiate\n\t\t%cEXAMPLE: var board = new Board({n:5})', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
+        console.log('\t2. An array of arrays (a matrix). To create a populated board of size n:\n\t\t[ [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...] ] - Where each %c<val>%c is whatever value you want at that location on the board\n\t\t%cEXAMPLE: var board = new Board([[1,0,0],[0,1,0],[0,0,1]])', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
       } else if (params.hasOwnProperty('n')) {
         this.set(makeEmptyMatrix(this.get('n')));
       } else {
@@ -25,7 +24,7 @@
     },
 
     togglePiece: function(rowIndex, colIndex) {
-      this.get(rowIndex)[colIndex] = + !this.get(rowIndex)[colIndex];
+      this.get(rowIndex)[colIndex] = +!this.get(rowIndex)[colIndex];
       this.trigger('change');
     },
 
@@ -62,14 +61,14 @@
     },
 
 
-/*
-         _             _     _
-     ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
-    / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
-    \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
-    |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
+    /*
+             _             _     _
+         ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
+        / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
+        \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
+        |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
 
- */
+     */
     /*=========================================================================
     =                 TODO: fill in these Helper Functions                    =
     =========================================================================*/
@@ -79,30 +78,30 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-     var count = 0;
-     var conflict = false;
-     _.each(rowIndex, function (square) {
+      var count = 0;
+      var conflict = false;
+      _.each(rowIndex, function(square) {
         if (square === 1) {
-          count ++;
+          count++;
           console.log(count);
         }
         if (count >= 2) {
           conflict = true;
         }
       })
-      return conflict; 
+      return conflict;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       var self = this;
       var conflict = false;
-      _.each(self.rows(),function(row){
-         if (self.hasRowConflictAt(row)){
-            conflict = true;
-         }
+      _.each(self.rows(), function(row) {
+        if (self.hasRowConflictAt(row)) {
+          conflict = true;
+        }
       });
-      return conflict; 
+      return conflict;
     },
 
 
@@ -119,16 +118,16 @@
     hasAnyColConflicts: function() {
       var self = this;
       var conflict = false;
-      for (var i = 0; i < self.rows().length; i++){
+      for (var i = 0; i < self.rows().length; i++) {
         console.log('hey')
-        var column = _.map(self.rows(),function(row){
+        var column = _.map(self.rows(), function(row) {
           return row[i];
         });
-        if (self.hasColConflictAt(column)){
+        if (self.hasColConflictAt(column)) {
           conflict = true;
         }
       }
-      
+
       return conflict; // fixme
     },
 
@@ -144,12 +143,12 @@
       var diagonal = [];
       var startingRow = startingIndex[0];
       var startingCol = startingIndex[1];
-      for (var i = startingRow; i < rows.length; i++){
-        for (var j = startingCol; i < rows.length; j++){
+      for (var i = startingRow; i < rows.length; i++) {
+        for (var j = startingCol; i < rows.length; j++) {
           diagonal.push(rows[i][j]);
           i++;
         }
-      }  
+      }
       return this.hasRowConflictAt(diagonal);
       //return false;
     },
@@ -160,18 +159,18 @@
       var rows = self.rows();
       var conflict = false;
       //check each member of the first row
-      for (var i = 0; i < rows.length; i++){
-          if (self.hasMajorDiagonalConflictAt([0,i])){
-            conflict = true;
-          }
-      }
-      //check each member of the first column
-      for (var j = 0; j < rows.length; j++){
-        if (self.hasMajorDiagonalConflictAt([j,0])){
+      for (var i = 0; i < rows.length; i++) {
+        if (self.hasMajorDiagonalConflictAt([0, i])) {
           conflict = true;
         }
       }
-     
+      //check each member of the first column
+      for (var j = 0; j < rows.length; j++) {
+        if (self.hasMajorDiagonalConflictAt([j, 0])) {
+          conflict = true;
+        }
+      }
+
       return conflict; // fixme
       //return false;
     },
@@ -187,15 +186,15 @@
       var rows = self.rows();
       var diagonal = [];
       var diagonalIndex = startingIndex[0] + startingIndex[1];
-      for (var i = 0; i < rows.length; i++){
-        for (var j = 0; j < rows.length; j++){
-          if ((i+j) === diagonalIndex){
+      for (var i = 0; i < rows.length; i++) {
+        for (var j = 0; j < rows.length; j++) {
+          if ((i + j) === diagonalIndex) {
             diagonal.push(rows[i][j]);
           }
         }
       }
 
-      return self.hasRowConflictAt(diagonal); 
+      return self.hasRowConflictAt(diagonal);
     },
 
     // test if any minor diagonals on this board contain conflicts
@@ -204,20 +203,20 @@
       var rows = self.rows();
       var conflict = false;
       //check each member of the first row
-      for (var i = 1; i < rows.length; i++){
-          if (self.hasMinorDiagonalConflictAt([0,i])){
-            conflict = true;
-          }
-      }
-      //check each member of the first column
-      for (var j = 0; j < rows.length; j++){
-        if (self.hasMinorDiagonalConflictAt([j,rows.length-1])){
+      for (var i = 1; i < rows.length; i++) {
+        if (self.hasMinorDiagonalConflictAt([0, i])) {
           conflict = true;
         }
       }
-     
+      //check each member of the first column
+      for (var j = 0; j < rows.length; j++) {
+        if (self.hasMinorDiagonalConflictAt([j, rows.length - 1])) {
+          conflict = true;
+        }
+      }
+
       return conflict; // fixme
-      
+
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
