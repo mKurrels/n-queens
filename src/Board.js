@@ -25,6 +25,7 @@
 
     togglePiece: function(rowIndex, colIndex) {
       this.get(rowIndex)[colIndex] = +!this.get(rowIndex)[colIndex];
+
       this.trigger('change');
     },
 
@@ -83,7 +84,6 @@
       _.each(rowIndex, function(square) {
         if (square === 1) {
           count++;
-          console.log(count);
         }
         if (count >= 2) {
           conflict = true;
@@ -119,7 +119,6 @@
       var self = this;
       var conflict = false;
       for (var i = 0; i < self.rows().length; i++) {
-        console.log('hey')
         var column = _.map(self.rows(), function(row) {
           return row[i];
         });
